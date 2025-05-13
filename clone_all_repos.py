@@ -18,17 +18,19 @@ def get_repos(username, token):
         page += 1
     return repos
 
-def clone_repos(repos, dest_dir):
+def clone_or_update_repos(repos, dest_dir):
     os.makedirs(dest_dir, exist_ok=True)
     for repo in repos:
         name = repo["name"]
         clone_url = repo["clone_url"]
         repo_path = os.path.join(dest_dir, name)
+
         if os.path.exists(repo_path):
-            print(f"Skipping existing repo: {name}")
-            continue
-        print(f"Cloning {name}...")
-        subprocess.run(["git", "clone", clone_url], cwd=dest_dir)
+            print(f"🔄 Repo '{name}' already exists. Pulling latest changes...")
+            subprocess.run(["git", "pull"], cwd=repo_path)
+        else:
+            print(f"⬇️  Cloning '{name}'...")
+            subprocess.run(["git", "clone", clone_url], cwd=dest_dir)
 
 if __name__ == "__main__":
     GITHUB_USERNAME = os.getenv("GITHUB_USERNAME")
@@ -42,5 +44,6 @@ if __name__ == "__main__":
     print(f"Fetching repositories for user '{GITHUB_USERNAME}'...")
     repositories = get_repos(GITHUB_USERNAME, GITHUB_TOKEN)
     print(f"Found {len(repositories)} repositories.")
-    clone_repos(repositories, DEST_DIR)
+    print(f"Cloning or updating repositories into: {DEST_DIR}")
+    clone_or_update_repos(repositories, DEST_DIR)
     print("✅ Done.")

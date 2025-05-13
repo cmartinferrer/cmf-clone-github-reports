@@ -76,6 +76,10 @@ This is safe if you're using Homebrew-installed Python.
 python clone_all_repos.py
 ```
 
+## 📝 New behavior (second run and onwards)
+If a repository already exists in the target directory, the script will pull the latest changes from GitHub (git pull).
+If the repository doesn't exist, it will be cloned as usual (git clone).
+
 ## 💡 Example Output
 ```text
 Fetching repositories for user 'johndoe'...
