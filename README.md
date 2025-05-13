@@ -14,7 +14,8 @@ Ideal for:
 
 - Python 3.6+
 - `git` command-line tool
-- GitHub [Personal Access Token](https://github.com/settings/tokens) (PAT)
+- GitHub [Personal Access Token](https://github.com/settings/tokens) 
+- Python package: [`requests`](https://pypi.org/project/requests/)
 
 ---
 
@@ -61,7 +62,16 @@ set GITHUB_TOKEN=your_token
 set DEST_DIR=.\my_repos
 ```
 
-### 3. Run the script
+### 3. Install Python dependencies
+❗ Note for Python 3.13+ users (like Homebrew Python on macOS):
+Due to PEP 668, installing packages globally is restricted. Use the following command to install dependencies safely:
+
+```bash
+pip3 install --break-system-packages -r requirements.txt
+```
+This is safe if you're using Homebrew-installed Python.
+
+### 4. Run the script
 ```bash
 python clone_all_repos.py
 ```
